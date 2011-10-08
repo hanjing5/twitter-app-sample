@@ -27,22 +27,25 @@ group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
+  gem 'faker', '0.3.1', :require => false
 end
 
 group :development do
   gem 'rspec-rails', '2.6.1'
   #gem 'annotate-models', '1.0.4'
-  #gem 'faker', '0.3.1', :require => false
+  gem 'faker', '0.3.1', :require => false
 end
 
 group :test do
   gem 'rspec-rails', '2.6.1'
   gem 'webrat', '0.7.1'
   gem 'factory_girl_rails', '1.0'
+  gem 'faker', '0.3.1', :require => false
 end
 
 group :production do
   # gems specifically for Heroku go here
   gem "pg"
+  gem 'faker', '0.3.1', :require => false
 end
 
