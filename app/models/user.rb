@@ -17,11 +17,15 @@ class User < ActiveRecord::Base
   validates :password, :presence => true,
 					   :confirmation => true,
 					   :length => { :within => 6..40 }
+  # encypt it before saving it
   before_save :encrypt_password
 
   # Return true if the user's password matches the submitted password
   def has_password?(submitted_password)
 	  # Compare encrypted_password with the encrypted version of submitted_password
+	  puts salt
+	  puts encrypted_password
+	  puts encrypt(submitted_password)
 	  encrypted_password == encrypt(submitted_password)
   end
 
@@ -37,11 +41,15 @@ class User < ActiveRecord::Base
   end
 
   private
-  
+
 	def encrypt_password
 	  # self is NOT optional when assigning to an attribute
-	  self.salt = make_salt if new_record?
-      self.encrypted_password = encrypt(password)
+	  # check to see if passsword is present to prevent nil 
+	  # from being saved as a password
+	  if password.present?
+	  	self.salt = make_salt if new_record?
+      	self.encrypted_password = encrypt(password)
+	  end
 	end
 
 	def encrypt(string)

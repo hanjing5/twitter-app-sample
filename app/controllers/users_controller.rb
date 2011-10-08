@@ -4,22 +4,24 @@ class UsersController < ApplicationController
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user,   :only => :destroy
 
-  def show
-	@user = User.find(params[:id])
-	@title = @user.name
-  end
 
   def make
     @user = 'make page'
   end
 
   def new
+	#if signed_in?
+	#	redirect_to(root_path)
+	#end
 	@user = User.new
 	@title = "Sign up"
   end
 
   def create
 	@user = User.new(params[:user])
+	#if signed_in?
+	#	redirect_to(root_path)
+	#end
 	if @user.save
 		# sign in the user after signing up
 		sign_in @user
@@ -60,9 +62,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-	User.find(params[:id]).destroy
-	flash[:success] = "User destroyed."
-	redirect_to users_path
+	if current_user.id.to_s == params[:id]
+		flash[:error] = "You can't delete yourself."
+		redirect_to users_path
+	else
+		User.find(params[:id]).destroy
+		flash[:success] = "User destroyed."
+		redirect_to users_path
+	end
   end
 
   private 
