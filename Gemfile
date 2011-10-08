@@ -32,7 +32,7 @@ end
 group :development do
   gem 'rspec-rails', '2.6.1'
   #gem 'annotate-models', '1.0.4'
-  gem 'faker', '0.3.1', :require => false
+  #gem 'faker', '0.3.1', :require => false
 end
 
 group :test do
